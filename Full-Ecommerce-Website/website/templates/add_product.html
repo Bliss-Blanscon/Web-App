@@ -1,0 +1,89 @@
+{% extends 'adminBase.html' %}
+
+{% block title %} Add Product {% endblock %}
+
+{% block body %}
+<style>
+    #allp table thead tr th {
+        position: sticky;
+        top: 0;
+    }
+    .AddProductTable tr .text input {
+        padding: 5px;
+        outline: 2px solid #ccc;
+        background-color: rgb(200, 200, 200);
+    }
+</style>
+<main class="ml-[20%]">
+
+<!-- Available Products table -->
+<section class="overflow-auto max-w-full h-[70vh] custom-scrollbar" id="allp">
+    <table class="availableProducts min-w-full bg-white border border-gray-200" border="1">
+        <thead class="bg-orange-600 text-white sticky top-0">
+            <tr>
+                <th class="py-4 px-2 md:px-6" scope="col">ID</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Date Added</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Product Name</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Previous Price</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Current Price</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Product Picture</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Flash Sale</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr class="border-b bg-orange-500">
+                <th class="py-4 px-2 md:px-6" scope="row">{{ product.id }}</th>
+                <td class="py-4 px-2 md:px-6">{{ product.date_added }}</td>
+                <td class="py-4 px-2 md:px-6">{{ product.product_name }}</td>
+                <td class="py-4 px-2 md:px-6">{{ product.previous_price }}</td>
+                <td class="py-4 px-2 md:px-6">{{ product.current_price }}</td>
+                <td class="py-4 px-2 md:px-6">
+                  <img src="{{ product.product_picture }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;">
+                </td>
+                {% if product.flash_sale %}
+                <td class="py-4 px-2 md:px-6">Yes</td>
+                {% else %}
+                <td class="py-4 px-2 md:px-6">No</td>
+                {% endif %}
+                <td class="py-4 px-2 md:px-6">
+                    <a class="bg-orange-500 text-white px-2 py-1 md:px-4 md:py-2 rounded hover:bg-orange-600" href="{{ url_for('admin.update_product', product_id=product.id) }}">Update</a>
+                    <a class="bg-orange-500 text-white px-2 py-1 md:px-4 md:py-2 rounded hover:bg-orange-600 ml-2" href="{{ url_for('admin.delete_product', product_id=product.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>  
+</section>
+
+<!-- Add Products form -->
+<form action="{{ url_for('admin.AddProduct') }}" class="mt-8 w-full mx-auto bg-white p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <table class="AddProductTable min-w-full bg-white border border-gray-200" border="1">
+        <thead>
+            <tr class="bg-orange-600 text-white">
+                <th scope="col">Product Name</th>
+                <th scope="col">Previous Price</th>
+                <th scope="col">Current Price</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Flash Sale</th>
+                <th scope="col">Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text">{{ form.product_name }}</td>
+                <td class="text">{{ form.previous_price }}</td>
+                <td class="text">{{ form.current_price }}</td>
+                <td>{{ form.product_picture() }}</td>
+                <td>{{ form.flash_sale }}</td>
+                <td>{{ form.add_product(class_="btn") }}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+   
+</main>
+{% endblock %}

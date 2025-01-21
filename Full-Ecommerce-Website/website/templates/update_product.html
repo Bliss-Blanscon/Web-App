@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<style>
+    #allp{
+        position: relative;
+        height: 200px;
+        width: 100vw;
+        overflow: scroll;
+    }
+    #allp table thead tr th{
+        position: sticky;
+        top: 0;
+        background-color: aqua;
+
+    }
+</style>
+<body>
+<!-- Available Products table -->
+<section id="allp">
+    <table class="availableProducts" border="1">
+        <thead>
+            <tr>
+                    <th scope="cole"> ID </th>
+                    <th scope="cole"> Date Added </th>
+                    <th scope="cole"> Product Name </th>
+                    <th scope="cole"> Previous Price </th>
+                    <th scope="cole"> Current Price </th>
+                    <th scope="cole"> Product Picture </th>
+                    <th scope="cole"> Flash Sale </th> 
+            </tr>
+        </thead>
+
+
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <th scope="row">{{product.id}}</th>
+                        <td> {{ product.date_added}}</td>
+                        <td> {{ product.product_name}}</td>
+                        <td> {{ product.previous_price}}</td>
+                        <td> {{ product.current_price}}</td>
+                        <td> <img src="{{ product.product_picture }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;"></td>
+                        {% if product.flash_sale%}
+                            <td>Yes</td>
+                        {% else %}
+                            <td>No</td>
+                        {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        
+    </table>
+ </section>
+    
+    
+<!-- Add Products form -->
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <table class="AddProductTable" border="1">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Previous Price</th>
+                    <th scope="col">Current Price</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Flash Sale</th>
+                    <th scope="col">Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ form.product_name }}</td>
+                    <td>{{ form.previous_price }}</td>
+                    <td>{{ form.current_price }}</td>
+                    <td>{{ form.product_picture() }}</td>
+                    <td>{{ form.flash_sale }}</td>
+                    <td>{{ form.update_product() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

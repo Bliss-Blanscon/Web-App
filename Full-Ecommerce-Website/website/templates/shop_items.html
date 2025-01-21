@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availables</title>
+</head>
+<body>
+    {% if items | length < 1 %}
+        <h3 style="color:white;"> No Items</h3>
+    {% else %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="cole"> ID </th>
+                    <th scope="cole"> Date Added </th>
+                    <th scope="cole"> Product Name </th>
+                    <th scope="cole"> Previous Price </th>
+                    <th scope="cole"> Current Price </th>
+                    <th scope="cole"> Product Picture </th>
+                    <th scope="cole"> Flash Sale </th> 
+                    <th scope="cole"> Action </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <th scope="row">{{item.id}}</th>
+                        <td> {{ item.date_added}}</td>
+                        <td> {{ item.item.name}}</td>
+                        <td> {{ item.previous_price}}</td>
+                        <td> {{ item.current_price}}</td>
+                        <td> <img src="{{ item.product_picture }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;"></td>
+                        <td>{{item.flash_sale}}</td>
+
+                        <td>
+                            <a href="#">Update</a>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                {endfor}
+            </tbody>
+        </table>
+
+    {% endif %}
+</body>
+</html>

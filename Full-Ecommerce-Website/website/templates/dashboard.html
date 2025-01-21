@@ -1,0 +1,198 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: #f97316;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 16px;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar ul li a i {
+            margin-right: 8px;
+        }
+        .main-content {
+            width: 75%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .welcome {
+            background: linear-gradient(to right, #f97316, #ef4444, #ec4899);
+            color: white;
+            padding: 24px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .welcome h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .welcome p {
+            font-size: 18px;
+            margin: 0;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .dashboard-box {
+            padding: 24px;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-box i {
+            font-size: 32px;
+            margin-right: 16px;
+        }
+        .dashboard-box h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+        }
+        .dashboard-box p {
+            margin: 0;
+        }
+        .orders {
+            background-color: #3b82f6;
+        }
+        .customers {
+            background-color: #10b981;
+        }
+        .employees {
+            background-color: #ef4444;
+        }
+        .products {
+            background-color: #8b5cf6;
+        }
+        .footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Nududu Admin</h2>
+        <ul>
+            <li>
+                <a href="/orders">
+                    <i class="fas fa-box"></i> Orders
+                </a>
+            </li>
+            <li>
+                <a href="/customers">
+                    <i class="fas fa-users"></i> Customers
+                </a>
+            </li>
+            <li>
+                <a href="/add_employee">
+                    <i class="fas fa-user-tie"></i> Employees
+                </a>
+            </li>
+            <li>
+                <a href="/add_product">
+                    <i class="fas fa-utensils"></i> Products
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div>
+            <div class="welcome">
+                <div>
+                    <h1>Welcome to Nududu Admin Dashboard</h1>
+                    <p>Manage your restaurant efficiently and effectively.</p>
+                </div>
+                <div>
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-box orders">
+                    <i class="fas fa-box-open"></i>
+                    <div>
+                        <h2>Orders</h2>
+                        <p>Manage and track all orders.</p>
+                    </div>
+                </div>
+                <div class="dashboard-box customers">
+                    <i class="fas fa-user-friends"></i>
+                    <div>
+                        <h2>Customers</h2>
+                        <p>View and manage customer information.</p>
+                    </div>
+                </div>
+                <div class="dashboard-box employees">
+                    <i class="fas fa-user-tie"></i>
+                    <div>
+                        <h2>Employees</h2>
+                        <p>Manage employee details and roles.</p>
+                    </div>
+                </div>
+                <div class="dashboard-box products">
+                    <i class="fas fa-utensils"></i>
+                        <div>
+                            <h2>Products</h2>
+                            <p>Add, edit, and manage products.</p>
+                        </div>
+                    
+                    
+
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <p>&copy; 2023 Nududu Restaurant. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

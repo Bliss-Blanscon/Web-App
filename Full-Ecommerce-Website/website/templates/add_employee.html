@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Add Employee</title>
+
+    <style>
+        .availableProducts {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        .availableProducts th, .availableProducts td {
+            padding: 10px;
+            text-align: left;
+        }
+    
+        .availableProducts th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <section id="allp">
+        <!-- Available Employees Table -->
+        <h2>Available Employees</h2>
+        <table class="availableProducts" border="1">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in new_employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.employee_name }}</td>
+                    <td>{{ employee.date_of_birth }}</td>
+                    <td>{{ employee.gender }}</td>
+                    <td>{{ employee.role }}</td>
+                    <td>{{ employee.date_added }}</td>
+                    <td>
+                        <a href="#">Edit</a>
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add New Employee Form -->
+        <h2>Add New Employee</h2>
+        <form action="{{ url_for('admin.AddEmployee') }}" method="POST">
+            {{ form.hidden_tag() }}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Employee Name</th>
+                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Date Added</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ form.email }}</td>
+                        <td>{{ form.employee_name }}</td>
+                        <td>{{ form.date_of_birth }}</td>
+                        <td>{{ form.gender }}</td>
+                        <td>{{ form.role }}</td>
+                        <td>{{ form.date_added }}</td>
+                        <td>{{ form.add(type="submit") }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </section>
+</body>
+</html>

@@ -1,0 +1,48 @@
+#appl {
+    width: 100%;
+    height: 70vh;
+    overflow: scroll;
+}
+
+table thead tr th{
+    position: sticky;
+    top: 0;
+    padding: 9px 6px;
+    background: rgb(199, 90, 0);
+}
+
+
+.For-data td{
+    padding: 9px 7px;
+    background-color: rgb(232, 232, 232);
+    text-align: center;
+}
+
+.buttons a{
+    padding: 10px 4px;
+    color: white;
+    border-radius: 2px;
+}
+
+.Update{
+    background-color: rgb(255, 196, 0);
+
+}
+.delete{
+    background-color: rgb(168, 10, 10);
+}
+
+.AddProductTable{
+    width: 100%;
+}
+
+.AddProductTable tbody tr td{
+    padding: 9px 7px;
+    background-color: rgb(232, 232, 232);
+    text-align: center;
+}
+
+.AddProductTable tr .text input{
+    padding: 5px;
+    background-color: rgb(200, 200, 200);   
+}

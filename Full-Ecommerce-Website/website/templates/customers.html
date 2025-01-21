@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} Customers {% endblock %}
+
+{% block body %}
+<style>
+    #allp table thead tr th {
+        position: sticky;
+        top: 0;
+    }
+    .AddProductTable tr .text input {
+        padding: 5px;
+        outline: 2px solid #ccc;
+        background-color: rgb(200, 200, 200);
+    }
+</style>
+
+<!-- Customers table -->
+<section class="overflow-auto max-w-full h-[70vh] custom-scrollbar" id="allp">
+    <table class="availableProducts min-w-full bg-white border border-gray-200" border="1">
+        <thead class="bg-orange-600 text-white sticky top-0">
+            <tr>
+                <th class="py-4 px-2 md:px-6" scope="col">ID</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Email</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Username</th>
+                <th class="py-4 px-2 md:px-6" scope="col">Date Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr class="border-b bg-orange-500">
+                <th class="py-4 px-2 md:px-6" scope="row">{{ customer.id }}</th>
+                <td class="py-4 px-2 md:px-6">{{ customer.email }}</td>
+                <td class="py-4 px-2 md:px-6">{{ customer.username }}</td>
+                <td class="py-4 px-2 md:px-6">{{ customer.date_joined }}</td>
+                <td class="py-4 px-2 md:px-6">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

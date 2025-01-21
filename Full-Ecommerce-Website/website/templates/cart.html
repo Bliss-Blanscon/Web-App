@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+{% block body %}
+
+<div class="container mx-auto my-10 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% if cart %}
+        <!-- Shopping Cart Section -->
+        <div  class="col-span-2">
+            <h1 class="text-center text-2xl md:text-3xl font-bold bg-orange-800 py-3 text-white mb-8">Shopping Cart</h1>
+            <div class="bg-white rounded-lg shadow-md p-5">
+                {% for item in cart %}
+                <div id="card" class="flex flex-col md:flex-row items-center border border-gray-200 rounded-lg shadow-sm p-4 bg-white mb-4">
+                    <!-- Product Image -->
+                    <div class="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
+                        <img src="{{ item.product_in_cart.product_picture }}" alt="" class="rounded-lg shadow max-w-full h-auto" style="width: 150px; height: 150px;">
+                    </div>
+                    <!-- Product Details -->
+                    <div class="w-full ml-[10px] md:w-3/4">
+                        <h3 class="text-xl font-bold text-gray-800">{{ item.product_in_cart.product_name }}</h3>
+                        <div class="flex items-center my-3 space-x-2">
+                            <label for="quantity" class="text-sm font-medium text-gray-600">Quantity: </label>
+                            <a class="minus-cart cursor-pointer text-yellow-600 hover:text-yellow-700 transition duration-200" pid="{{ item.id }}">
+                                <i class="fas fa-minus-square fa-lg text-4xl"></i>
+                            </a>
+                            <span id="quantity{{ item.id }}" class="text-sm font-semibold text-gray-800 px-3">{{ item.quantity }}</span>
+                            <a class="plus-cart cursor-pointer text-yellow-600 hover:text-yellow-700 transition duration-200" pid="{{ item.id }}">
+                                <i class="fas fa-plus-square fa-lg text-4xl"></i>
+                            </a>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm font-semibold text-gray-700">
+                                GH₵ <span class="font-bold">{{ item.product_in_cart.current_price }}</span>
+                            </p>
+                            <a href="/removecart" class="remove-cart text-sm text-red-600 hover:text-white bg-red-400 flex items-center justify-center gap-x-2 rounded px-2 py-3 transition duration-200" pid="{{ item.id }}">
+                                <i class="fi fi-rs-trash text-xl" ></i><p>Remove</p>    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Cart Summary Section -->
+        <div>
+            <h1 class="text-lg font-bold text-white py-2 bg-orange-800 text-center mb-8">Cart Summary</h1>
+            <div class="bg-white rounded-lg shadow-md p-5">
+                <ul class="list-none">
+                    {% for item in cart %}
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b last:border-none py-2">
+                        <strong>{{ item.product_in_cart.product_name }}</strong>
+                        <span id="amount{{ item.id }}">{{ item.product_in_cart.current_price }} × 
+                            <span id="quantity{{ item.id }}" class="text-sm font-semibold text-gray-800 px-3">{{ item.quantity }}</span>
+                        </span>
+                    </li>
+                    {% endfor %}
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b py-2">
+                        <span>Amount</span>
+                        <span>GH₵<span id="amount_tt">{{ amount }}</span></span>
+                    </li>
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b py-2">
+                        <span>Delivery Fee</span>
+                        <span>GH₵<span id="delivery_fee">10</span></span>
+                    </li>
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 py-2">
+                        <div>
+                            <strong>Total</strong> 
+                            <small class="block text-gray-500">(Including delivery)</small>
+                        </div>
+                        <span>
+                            <strong>GH₵</strong>
+                            <span id="totalamount" class="font-bold text-gray-800">{{ total }}</span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="mt-6">
+                    <a href="/place-order" class="block w-full text-center bg-orange-400 text-white py-2 rounded-lg hover:bg-orange-700 transition duration-200">
+                        Place Order
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <h1 class="text-center text-2xl font-bold text-gray-100 col-span-3">Your Cart is Empty</h1>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll(".minus-cart").forEach((minus) => {
+        minus.addEventListener("click", () => {
+            const pid = minus.getAttribute("pid");
+            fetch(`/minuscart?cart_id=${pid}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.quantity > 0) {
+                        // Update the quantity in the DOM
+                        document.getElementById(`quantity${pid}`).innerText = data.quantity;
+                        document.getElementById("amount_tt").innerText = data.amount;
+                        document.getElementById("totalamount").innerText = data.total;
+                    } else {
+                        // Optionally remove the item if quantity is 0
+                        minus.closest(".flex").remove();
+                        document.getElementById("amount_tt").innerText = data.amount;
+                        document.getElementById("totalamount").innerText = data.total;
+                    }
+                });
+        });
+    });
+    
+    document.querySelectorAll(".plus-cart").forEach((add) => {
+        add.addEventListener("click", () => {
+            const pid = add.getAttribute("pid");
+            fetch(`/pluscart?cart_id=${pid}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    // Update the quantity in the DOM
+                    document.getElementById(`quantity${pid}`).innerText = data.quantity;
+                    document.getElementById("amount_tt").innerText = data.amount;
+                    document.getElementById("totalamount").innerText = data.total;
+                });
+        });
+    });
+    
+    let card = document.getElementById("card");
+    document.querySelectorAll(".remove-cart").forEach((remove) => {
+    remove.addEventListener("click", (e) => {
+        e.preventDefault();
+        const pid = remove.getAttribute("pid");
+        fetch(`/removecart?cart_id=${pid}`, { method: "GET" })
+            .then((response) => response.json())
+            .then((data) => {
+                // Remove the item from the DOM
+                remove.closest(".flex").remove();
+                card.classList.add("hidden");
+
+                // Update the amounts displayed in the cart summary
+                document.getElementById("amount_tt").innerText = data.amount;
+                document.getElementById("totalamount").innerText = data.total;
+
+                // Optionally, you can add a check if the cart is empty and display a message if needed
+                if (data.amount === 0) {
+                    document.querySelector('.col-span-3').innerHTML = '<h1 class="text-center text-2xl font-bold text-gray-100">Your Cart is Empty</h1>';
+                }
+            });
+    });
+});
+
+    </script>
+    
+{% endblock %}

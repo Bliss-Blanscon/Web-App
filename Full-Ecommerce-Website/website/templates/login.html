@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nududu | Login Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+</head>
+<body>
+  <div class="wrapper">
+    <form method="POST" action="{{ url_for('auth.login') }}">
+      {{ form.hidden_tag() }}
+
+      <h1>Sign In</h1>
+
+
+      <div class="input-box">
+        <label for="email">Email</label>
+        {{ form.email(id="email") }}
+        <i class='bx bxs-user'></i>
+      </div>
+
+      <div class="input-box">
+        <label for="password">Password</label>
+         {{ form.password(id="password") }}
+         <div class="seeInput"><i class='bi bi-eye-slash-fill'></i></div>
+        
+      </div>
+
+  
+      <div>
+        {{ form.submit(class_="btn") }}
+      </div>
+      
+    
+
+
+    <div class="register-link">
+      <p>Don`t have an account? <a href="{{ url_for('auth.sign_up') }}">Sign Up</a></p>
+    </div>
+      
+    </form>
+  </div>
+  <script>
+      const seeInput = document.querySelector(".seeInput")
+      const eyeIcon = document.querySelector(".bi")
+      seeInput.addEventListener('click', ()=>{
+        if (document.querySelector('#password').type === 'text') {
+          document.querySelector('#password').type = 'password';
+          eyeIcon.classList.remove('bi-eye-fill')
+          eyeIcon.classList.add('bi-eye-slash-fill')
+          setTimeout(() => {
+            document.querySelector('#password').type = 'password';
+            eyeIcon.classList.remove('bi-eye-fill')
+            eyeIcon.classList.add('bi-eye-slash-fill')
+          }, 2000);
+      
+          
+          
+        } else {
+          document.querySelector('#password').type = 'text';
+          eyeIcon.classList.remove('bi-eye-slash-fill')
+          eyeIcon.classList.add('bi-eye-fill')
+          setTimeout(() => {
+            document.querySelector('#password').type = 'password';
+            eyeIcon.classList.remove('bi-eye-fill')
+            eyeIcon.classList.add('bi-eye-slash-fill')
+          }, 2000);
+        }
+        
+      })
+  </script>
+</body>
+
+</html>

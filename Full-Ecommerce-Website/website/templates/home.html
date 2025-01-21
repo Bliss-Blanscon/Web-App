@@ -1,0 +1,113 @@
+{% extends 'base.html'%}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+<style>
+  
+  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Kaushan+Script&display=swap');
+
+
+  .hero {
+    height: 80vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+  }
+  .hero h1 {
+    font-family:"Dancing Script", serif; /* Elegant font for headings */
+    font-weight: 700;
+    
+  }
+
+  .hero p {
+    font-family: 'Poppins', sans-serif; /* Clean font for body text */
+    font-weight: 400;
+  }
+
+  #menu{
+    font-family: "Kaushan Script", serif;
+  }
+</style>
+
+<div class="hero relative text-white text-center">
+  <div class="z-20 flex flex-col items-center">
+    <h1 class="text-[60px] md:text-[90px] leading-[58px] md:leading-[88px] lg:leading-[48px] text-yellow-500 font-bold">
+      Delicious <span class="text-white">Food Awaits</span>
+    </h1>
+    <p class="text-lg hidden md:flex mt-[37px] w-[90vw] md:w-[60vw] mx-auto text-gray-200">
+      Step into a world of culinary delight where every dish is crafted with passion and care. From fresh ingredients to exceptional flavors, we bring you an unforgettable dining experience that’s more than just a meal—it’s a moment to savor.
+    </p>
+    <div id="order-now-button" class="px-2 py-4 hover:bg-yellow-200 hover:cursor-pointer bg-yellow-500 text-orange-900 border-[1px] border-orange-900 text-2xl font-bold w-[180px] mt-[30px] rounded-[50px]">Order Now</div>
+  </div>
+  <div style="opacity: 0.6;" class="absolute top-0 h-full w-full bg-orange-900"></div>
+</div>
+
+  <div id="menu-section" class="left-0 content py-8">
+    <h2 class="relative px-4 w-[90vw] mt-13 mb-[28px]">
+        <h3 id="menu" class="text-6xl font-bold pb-1 text-center text-orange-600">Menu</h3>
+        <div class="absolute buttom-0 right-[47%] h-[5px] w-[45px] bg-orange-500"></div> 
+    </h2>
+
+    <div class="py-6 px-5 menu grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-[20px] place-items-center">
+      <!--Loop 6 items here-->
+      {% for item in items %}
+      <div class=" md:block menu-item bg-gray-100 p-4 rounded-lg shadow-lg  w-[300px]">
+        <!--Food img-->
+        <div class="h-[220px] flex justify-center items-center overflow-hidden bg-gray-200 rounded-lg">
+            <img width="" class="" src="{{item.product_picture}}"/>
+        </div>
+        
+        <h3 class="text-2xl text-gray-700 font-bold mt-4">{{item.product_name}}</h3>
+        <p class="text-gray-700 text-[16px]">
+          Made with the finest ingredients, this dish is a perfect blend of flavor, texture, and aroma.
+        </p>       
+        <p class="mt-2 text-xl text-gray-800 font-bold">
+          GH₵{{item.current_price}} <span class="italic font-normal text-gray-700 text-[16px]">per Plate</span>
+        </p>
+        <div class="mt-4">
+         <a href="add_to_cart/{{item.id}}" class="bg-orange-900 active:bg-orange-700 text-white px-2 py-2 flex justify-center items-center gap-x-2 rounded add-to-cart" onclick="addToCart(this)">
+          <p class="text-xl">Add to Cart</p><i class="fi fi-rs-shopping-cart-add text-xl "></i>
+         </a>
+        </div>
+      </div>
+      {% endfor %} 
+    </div>
+  </div>
+
+  <script>
+     document.getElementById('order-now-button').addEventListener('click', function() {
+    const menuSection = document.getElementById('menu-section');
+    const offset = 100;
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = menuSection.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  });
+    const heroElement = document.querySelector('.hero');
+    const backgrounds = [
+      '../static/img/hero_bg.jpg',
+      '../static/img/hero_bg2.jpg',
+      '../static/img/hero_bg3.jpg',
+      '../static/img/hero_bg4.jpg',
+    ];
+    let index = 0;
+  
+    setInterval(() => {
+      heroElement.style.backgroundImage = `url(${backgrounds[index]})`;
+      index = (index + 1) % backgrounds.length; // Loop back to the first background
+    }, 3000); // Change every 3 seconds
+  </script>
+
+
+{% endblock %}

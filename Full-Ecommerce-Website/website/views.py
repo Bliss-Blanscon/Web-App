@@ -146,6 +146,17 @@ def remove_cart():
         }
 
         return jsonify(data)
+    
+@views.route('/checkout')
+@login_required
+def checkout():
+    cart = Cart.query.filter_by(customer_link=current_user.id).all()
+    amount = 0
+    for item in cart:
+        amount += item.product_in_cart.current_price * item.quantity
+
+    return render_template('checkout.html', cart=cart, amount=amount, total=amount+200)
+
 
 
 @views.route('/orders')
@@ -164,5 +175,7 @@ def search():
                            if current_user.is_authenticated else [])
 
     return render_template('search.html')
+
+
 
 

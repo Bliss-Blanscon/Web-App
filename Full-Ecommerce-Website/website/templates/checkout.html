@@ -1,0 +1,155 @@
+{% extends 'base.html'%}
+
+{% block title %} Checkout {% endblock %}
+
+{% block body %}
+ <body class="bg-orange-50 text-gray-800">
+  
+  <div class="container mx-auto p-4">
+   <main class="mt-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+     Checkout
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+     <div class="bg-orange-200 p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">
+       Billing Details
+      </h3>
+      <form class="space-y-4">
+       <div>
+        <label class="block text-gray-700" for="name">
+         Full Name
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="name" placeholder="Meonothai Nii" type="text"/>
+       </div>
+       <div>
+        <label class="block text-gray-700" for="email">
+         Email Address
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="email" placeholder="Meonothai@example.com" type="email"/>
+       </div>
+       <div>
+        <label class="block text-gray-700" for="Telephone">
+         Telephone Number
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="email" placeholder="+233 53 749 1514" type="email"/>
+       </div>
+       <div>
+        <label class="block text-gray-700" for="address">
+         Address
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="address" placeholder="123 Kasoa Amanfrom St" type="text"/>
+       </div>
+      </form>
+     </div>
+
+    
+        <!-- Cart Summary Section -->
+        <div>
+            <h1 class="text-lg font-bold text-white py-2 bg-orange-800 text-center mb-8">Cart Summary</h1>
+            <div class="bg-white rounded-lg shadow-md p-5">
+                <ul class="list-none">
+                    {% for item in cart %}
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b last:border-none py-2">
+                        <strong>{{ item.product_in_cart.product_name }}</strong>
+                        <span id="amount{{ item.id }}">{{ item.product_in_cart.current_price }} × 
+                            <span id="quantity{{ item.id }}" class="text-sm font-semibold text-gray-800 px-3">{{ item.quantity }}</span>
+                        </span>
+                    </li>
+                    {% endfor %}
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b py-2">
+                        <span>Amount</span>
+                        <span>GH₵<span id="amount_tt">{{ amount }}</span></span>
+                    </li>
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 border-b py-2">
+                        <span>Delivery Fee</span>
+                        <span>GH₵<span id="delivery_fee">10</span></span>
+                    </li>
+                    <li class="flex justify-between items-center text-sm font-medium text-gray-700 py-2">
+                        <div>
+                            <strong>Total</strong> 
+                            <small class="block text-gray-500">(Including delivery)</small>
+                        </div>
+                        <span>
+                            <strong>GH₵</strong>
+                            <span id="totalamount" class="font-bold text-gray-800">{{ total }}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+    
+
+    <div class="mt-8 bg-orange-200 p-6 rounded-lg shadow-md">
+     <h3 class="text-xl font-semibold text-gray-800 mb-4">
+      Payment Method
+     </h3>
+     <form class="space-y-4">
+      <div class="flex space-x-4">
+       <div class="w-1/4">
+        <input checked="" class="hidden" id="credit-card" name="payment-method" type="radio"/>
+        <label class="block cursor-pointer p-4 border border-gray-500 rounded-lg text-center hover:bg-orange-300" for="credit-card">
+         <img alt="Credit card icon with orange background and white text" class="mx-auto mb-2" src="../static/img/CREDITCARD.jpeg"/>
+         <span class="text-gray-800">
+          Credit Card
+         </span>
+        </label>
+       </div>
+       <div class="w-1/4">
+        <input class="hidden" id="paypal" name="payment-method" type="radio"/>
+        <label class="block cursor-pointer p-4 border border-gray-500 rounded-lg text-center hover:bg-orange-300" for="paypal">
+         <img alt="Pay Pal" class="mx-auto mb-2" src="../static/img/PAYPAL.jpeg"/>
+         <span class="text-gray-800">
+          PayPal
+         </span>
+        </label>
+       </div>
+       <div class="w-1/4">
+        <input class="hidden" id="apple-pay" name="payment-method" type="radio"/>
+        <label class="block cursor-pointer p-4 border border-gray-500 rounded-lg text-center hover:bg-orange-300" for="apple-pay">
+         <img alt="Apple Pay icon with orange background and white text" class="mx-auto mb-2" src="../static/img/APPLEPAY.jpeg"/>
+         <span class="text-gray-800">
+          Apple Pay
+         </span>
+        </label>
+       </div>
+       <div class="w-1/4">
+        <input class="hidden" id="momo" name="payment-method" type="radio"/>
+        <label class="block cursor-pointer p-4 border border-gray-500 rounded-lg text-center hover:bg-orange-300" for="momo">
+         <img alt="MoMo icon with orange background and white text" class="mx-auto mb-2" src="../static/img/MOMO.jpeg"/>
+         <span class="text-gray-800">
+          MoMo
+         </span>
+        </label>
+       </div>
+      </div>
+      <div>
+       <label class="block text-gray-700" for="card-number">
+        Card Number
+       </label>
+       <input class="w-full border border-gray-300 p-2 rounded" id="card-number" placeholder="1234 5678 9012 3456" type="text"/>
+      </div>
+      <div class="flex space-x-4">
+       <div class="w-1/2">
+        <label class="block text-gray-700" for="expiry-date">
+         Expiry Date
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="expiry-date" placeholder="MM/YY" type="text"/>
+       </div>
+       <div class="w-1/2">
+        <label class="block text-gray-700" for="cvv">
+         CVV
+        </label>
+        <input class="w-full border border-gray-300 p-2 rounded" id="cvv" placeholder="123" type="text"/>
+       </div>
+      </div>
+      <button class="w-full bg-orange-600 text-white p-2 rounded hover:bg-orange-700 border-gray-300" type="submit">
+       Proceed With Payment
+      </button>
+     </form>
+    </div>
+
+   </main>
+  </div>
+ {% endblock %}

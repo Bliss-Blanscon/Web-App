@@ -105,7 +105,7 @@ def AddEmployee():
 @login_required
 def shop_items():
     if current_user.id == 1:
-        items = Product.query.order_by(Product.date_added).all()
+        items = Product.query.order_by (Product.date_added.desc()).all()
         return render_template('shop_items.html', items=items)
     return render_template('404.html')
 

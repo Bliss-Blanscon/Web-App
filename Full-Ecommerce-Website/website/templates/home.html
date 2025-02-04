@@ -56,14 +56,14 @@
 
     <div class="py-6 px-5 menu grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-[20px] place-items-center">
       <!--Loop 6 items here-->
-      {% for item in items %}
+      {% for item in items| sort(attribute='date_added', reverse=True) %}
       <div class=" md:block menu-item bg-gray-100 p-4 rounded-lg shadow-lg  w-[300px]">
         <!--Food img-->
         <div class="h-[220px] flex justify-center items-center overflow-hidden bg-gray-200 rounded-lg">
             <img width="" class="" src="{{item.product_picture}}"/>
         </div>
         
-        <h3 class="text-2xl text-gray-700 font-bold mt-4">{{item.product_name}}</h3>
+        <h3 class="text-2xl text-gray-700 font-bold mt-4">{{item.product_name |capitalize}}</h3>
         <p class="text-gray-500 text-[16px]">
           Made with the finest ingredients, this dish is a perfect blend of flavor, texture, and aroma.
         </p>       
